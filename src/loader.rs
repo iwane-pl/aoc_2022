@@ -20,3 +20,10 @@ pub fn load(in_path: &str) -> String {
     let contents = fs::read_to_string(exe).expect("Should have been able to read the file");
     return contents;
 }
+
+pub fn parse_line(line: &str, index: usize) -> u32 {
+    match line.parse() {
+        Ok(num) => {num}
+        Err(_) => {panic!("Invalid value at line {index}");}
+    }
+}
