@@ -34,3 +34,20 @@ fn test_day02_p2() {
 
     assert_eq!(points, 12);
 }
+
+#[test]
+fn test_day03_p1() {
+    let contents = load(r"..\..\..\..\tests\day03_p1.txt");
+    
+    let points = day03_p1(&contents);
+
+    assert_eq!(points, 157);
+}
+#[test]
+fn test_day03_p2() {
+    let contents = load(r"..\..\..\..\tests\day03_p1.txt");
+    
+    let points = day03_p2(&contents);
+
+    assert_eq!(points, 70);
+}
