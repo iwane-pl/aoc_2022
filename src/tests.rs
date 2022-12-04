@@ -22,32 +22,51 @@ fn test_day01_p2() {
 fn test_day02_p1() {
     let contents = load(r"..\..\..\..\tests\day02_p1.txt");
     
-    let points = day02_p1(&contents);
+    let result = day02_p1(&contents);
 
-    assert_eq!(points, 15);
+    assert_eq!(result, 15);
 }
 #[test]
 fn test_day02_p2() {
     let contents = load(r"..\..\..\..\tests\day02_p1.txt");
     
-    let points = day02_p2(&contents);
+    let result = day02_p2(&contents);
 
-    assert_eq!(points, 12);
+    assert_eq!(result, 12);
 }
 
 #[test]
 fn test_day03_p1() {
     let contents = load(r"..\..\..\..\tests\day03_p1.txt");
     
-    let points = day03_p1(&contents);
+    let result = day03_p1(&contents);
 
-    assert_eq!(points, 157);
+    assert_eq!(result, 157);
 }
+
 #[test]
 fn test_day03_p2() {
     let contents = load(r"..\..\..\..\tests\day03_p1.txt");
     
-    let points = day03_p2(&contents);
+    let result = day03_p2(&contents);
 
-    assert_eq!(points, 70);
+ 
+    assert_eq!(result, 70);
+}
+
+#[test]
+fn test_day04_p1() {
+    let contents = load(r"..\..\..\..\tests\day04_p1.txt");
+    
+    let result = day04_p1(&contents);
+
+    assert_eq!(result, 2);
+}
+#[test]
+fn test_day04_p2() {
+    let contents = load(r"..\..\..\..\tests\day04_p1.txt");
+    
+    let result = day04_p2(&contents);
+
+    assert_eq!(result, 4);
 }

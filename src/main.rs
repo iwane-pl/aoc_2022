@@ -2,6 +2,7 @@ mod loader;
 mod day01;
 mod day02;
 mod day03;
+mod day04;
 
 #[cfg(test)]
 mod tests;
@@ -10,6 +11,7 @@ use loader::*;
 use day01::*;
 use day02::*;
 use day03::*;
+use day04::*;
 
 fn main() {
     println!("--- Advent of Code 2022 ---");
@@ -32,11 +34,22 @@ fn main() {
     let score = day02_p2(&contents);
     println!("Score 2: {score}");
     
+    println!("\n-- Day 3 --");
+    
     let contents = load(r"../../../inputs/day03.txt");
     
     let score = day03_p1(&contents);
     println!("Score 1: {score}");
     let score = day03_p2(&contents);
+    println!("Score 2: {score}");
+
+    println!("\n-- Day 4 --");
+    
+    let contents = load(r"../../../inputs/day04.txt");
+    
+    let score = day04_p1(&contents);
+    println!("Score 1: {score}");
+    let score = day04_p2(&contents);
     println!("Score 2: {score}");
 
 }
