@@ -1,18 +1,17 @@
-use std::fs;
 use std::env;
+use std::fs;
 use std::path;
 
 pub fn load(in_path: &str) -> String {
-
     println!("--- Input data ---");
     let mut exe = env::current_exe().unwrap();
     let file_path_disp = exe.display();
     println!("Executable path: {file_path_disp}");
-    
+
     let file_path = path::PathBuf::from(in_path);
     let file_path_disp = file_path.display();
     println!("Input path: {file_path_disp}");
-    
+
     exe.push(file_path);
     let file_path_disp = exe.display();
     println!("Absolute input path: {file_path_disp}");
@@ -23,7 +22,9 @@ pub fn load(in_path: &str) -> String {
 
 pub fn parse_line(line: &str, index: usize) -> u32 {
     match line.parse() {
-        Ok(num) => {num}
-        Err(_) => {panic!("Invalid value at line {index}");}
+        Ok(num) => num,
+        Err(_) => {
+            panic!("Invalid value at line {index}");
+        }
     }
 }
