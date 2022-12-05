@@ -69,3 +69,31 @@ fn test_day04_p2() {
 
     assert_eq!(result, 4);
 }
+
+#[test]
+fn test_instruction_parse() {
+    let contents = "move 1 from 2 to 1";
+
+    let result: Instruction = contents.parse::<Instruction>().unwrap();
+
+    assert_eq!(result.count, 1);
+    assert_eq!(result.from, 1);
+    assert_eq!(result.to, 0);
+}
+
+#[test]
+fn test_day05_p1() {
+    let contents = load(r"..\..\..\..\tests\day05_p1.txt");
+
+    let result = day05_p1(&contents, false);
+
+    assert_eq!(result, "CMZ".to_string());
+}
+#[test]
+fn test_day05_p2() {
+    let contents = load(r"..\..\..\..\tests\day05_p1.txt");
+
+    let result = day05_p1(&contents, true);
+
+    assert_eq!(result, "MCD".to_string());
+}
