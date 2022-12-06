@@ -71,7 +71,7 @@ fn test_day04_p2() {
 }
 
 #[test]
-fn test_instruction_parse() {
+fn test_day05_instruction_parse() {
     let contents = "move 1 from 2 to 1";
 
     let result: Instruction = contents.parse::<Instruction>().unwrap();
@@ -96,4 +96,38 @@ fn test_day05_p2() {
     let result = day05_p1(&contents, true);
 
     assert_eq!(result, "MCD".to_string());
+}
+
+#[test]
+fn test_day06_p1() {
+    let inputs: [(&str, u32); 5] = [
+        ("mjqjpqmgbljsphdztnvjfqwrcgsmlb", 7),
+        ("bvwbjplbgvbhsrlpgdmjqwftvncz", 5),
+        ("nppdvjthqldpwncqszvftbrmjlhg", 6),
+        ("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", 10),
+        ("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", 11),
+    ];
+
+    for (idx, (contents, exp_pos)) in inputs.iter().enumerate() {
+        let result = day06_p1(&contents.to_string(), 4);
+
+        assert_eq!(result, *exp_pos, "failure at message {idx}");
+    }
+}
+
+#[test]
+fn test_day06_p2() {
+    let inputs: [(&str, u32); 5] = [
+        ("mjqjpqmgbljsphdztnvjfqwrcgsmlb", 19),
+        ("bvwbjplbgvbhsrlpgdmjqwftvncz", 23),
+        ("nppdvjthqldpwncqszvftbrmjlhg", 23),
+        ("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", 29),
+        ("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", 26),
+    ];
+
+    for (idx, (contents, exp_pos)) in inputs.iter().enumerate() {
+        let result = day06_p1(&contents.to_string(), 14);
+
+        assert_eq!(result, *exp_pos, "failure at message {idx}");
+    }
 }
