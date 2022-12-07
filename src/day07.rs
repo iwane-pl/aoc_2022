@@ -1,8 +1,6 @@
-use std::collections::BTreeMap;
-use std::str;
-
-#[derive(Debug)]
+#[derive(Debug, Hash, Eq, PartialEq)]
 pub struct FsEntry {
+    pub name: String,
     pub etype: char,
     pub size: u32,
     pub path: String,
@@ -11,7 +9,7 @@ pub struct FsEntry {
 pub fn day07_p1(contents: &String) -> u32 {
     let mut result = 0;
 
-    let mut filesystem: BTreeMap<(&str, char), FsEntry> = BTreeMap::new();
+    let mut filesystem: Vec<FsEntry> = vec![];
     let mut pwd: Vec<&str> = vec![];
 
     for line in contents.lines() {
@@ -24,14 +22,21 @@ pub fn day07_p1(contents: &String) -> u32 {
             match cmd[0] {
                 "cd" => {
                     if cmd[1] != ".." {
-                        filesystem.insert(
-                            (cmd[1], 'd'),
-                            FsEntry {
-                                etype: 'd',
-                                size: 0,
-                                path: pwd.join("/"),
-                            },
-                        );
+                        let ppath = pwd.join("/");
+                        let result = filesystem
+                            .iter()
+                            .find(|e| e.name == cmd[1] && e.path == ppath);
+                        match result {
+                            Some(_) => {}
+                            None => {
+                                filesystem.push(FsEntry {
+                                    name: cmd[1].to_string(),
+                                    etype: 'd',
+                                    size: 0,
+                                    path: ppath,
+                                });
+                            }
+                        }
                     }
                     match cmd[1] {
                         "/" => pwd = vec!["/"],
@@ -52,38 +57,43 @@ pub fn day07_p1(contents: &String) -> u32 {
 
             match entry[0] {
                 "dir" => {
-                    filesystem.insert(
-                        (entry[1], 'd'),
-                        FsEntry {
-                            etype: 'd',
-                            size: 0,
-                            path: pwd.join("/"),
-                        },
-                    );
+                    filesystem.push(FsEntry {
+                        name: entry[1].to_string(),
+                        etype: 'd',
+                        size: 0,
+                        path: pwd.join("/"),
+                    });
                 }
                 size => {
                     let size = size.parse::<u32>().unwrap();
-                    filesystem.insert(
-                        (entry[1], 'f'),
-                        FsEntry {
-                            etype: 'f',
-                            size: size,
-                            path: pwd.join("/"),
-                        },
-                    );
-                    for parent in pwd.clone().into_iter().rev() {
-                        filesystem
-                            .entry((parent, 'd'))
-                            .and_modify(|e| e.size += size);
+                    filesystem.push(FsEntry {
+                        name: entry[1].to_string(),
+                        etype: 'f',
+                        size: size,
+                        path: pwd.join("/"),
+                    });
+
+                    // parent modification
+                    let mut visited = vec![];
+                    for parent_name in pwd.iter() {
+                        for entry in filesystem.iter_mut() {
+                            if entry.name == parent_name.to_string()
+                                && entry.etype == 'd'
+                                && entry.path == visited.join("/")
+                            {
+                                entry.size += size;
+                            }
+                        }
+                        visited.push(*parent_name);
                     }
                 }
             }
         }
     }
 
-    for ((name, etype), entry) in filesystem.iter() {
+    for entry in filesystem.iter() {
         if entry.etype == 'd' && entry.size <= 100_000 {
-            println!("found {name}:{entry:?}");
+            println!("found {entry:?}");
             result += entry.size;
         }
     }
