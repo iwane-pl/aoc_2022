@@ -131,3 +131,13 @@ fn test_day06_p2() {
         assert_eq!(result, *exp_pos, "failure at message {idx}");
     }
 }
+
+#[test]
+fn test_day07_p1() {
+    let contents = load(r"..\..\..\..\tests\day07_p1.txt");
+
+    let result = day07_p1(&contents);
+
+    assert_eq!(result, 95437);
+    // assert_eq!(result, 0);
+}
