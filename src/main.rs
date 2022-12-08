@@ -5,6 +5,7 @@ mod day04;
 mod day05;
 mod day06;
 mod day07;
+mod day08;
 mod loader;
 
 #[cfg(test)]
@@ -17,6 +18,7 @@ use day04::*;
 use day05::*;
 use day06::*;
 use day07::*;
+use day08::*;
 use loader::*;
 use std::env;
 
@@ -104,6 +106,17 @@ fn main() {
         let score = day07_p1(&contents);
         println!("Part 1: {score}");
         let score = day07_p2(&contents);
+        println!("Part 2: {score}");
+    }
+
+    if args.contains(&"day08".to_string()) {
+        println!("\n-- Day 08 --");
+
+        let contents = load(r"../../../inputs/day08.txt");
+
+        let score = day08_p1(&contents);
+        println!("Part 1: {score}");
+        let score = day08_p2(&contents);
         println!("Part 2: {score}");
     }
 }
