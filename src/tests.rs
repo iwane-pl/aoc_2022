@@ -156,14 +156,23 @@ fn test_day08_p2() {
 
     let result = day08_p2(&contents);
 
-    assert_eq!(result, 4);
+    assert_eq!(result, 8);
 }
 
 #[test]
 fn test_day08_score_1() {
     let contents = load(r"..\..\..\..\tests\day08_p1.txt");
     let map = get_map(&contents);
-    let result = scenic_score(&map, 1, 1);
+    let result = scenic_score(&map, 2, 1);
 
     assert_eq!(result, 4);
+}
+
+#[test]
+fn test_day08_score_2() {
+    let contents = load(r"..\..\..\..\tests\day08_p1.txt");
+    let map = get_map(&contents);
+    let result = scenic_score(&map, 2, 3);
+
+    assert_eq!(result, 8);
 }

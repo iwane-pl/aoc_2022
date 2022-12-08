@@ -47,56 +47,57 @@ fn is_visible(tree_map: &Vec<Vec<usize>>, x: usize, y: usize) -> bool {
 pub fn scenic_score(tree_map: &Vec<Vec<usize>>, x: usize, y: usize) -> usize {
     // let mut visible = false;
     let size = tree_map[0].len();
-    let tree = tree_map[x][y];
+    let tree = tree_map[y][x];
 
     let mut score_top = 0;
     let mut score_bottom = 0;
-    for ty in 0..size {
-        match ty.cmp(&y) {
-            Ordering::Equal => {
-                continue;
-            }
-            Ordering::Less => {
-                if score_top == 0 && tree <= tree_map[x][ty] {
-                    score_top = y.abs_diff(ty);
-                }
-            }
-            Ordering::Greater => {
-                if score_bottom == 0 && tree <= tree_map[x][ty] {
-                    score_bottom = y.abs_diff(ty);
-                }
-            }
-        }
-        if score_bottom > 0 && score_top > 0 {
-            break;
-        }
-    }
     let mut score_left = 0;
     let mut score_right = 0;
-    for tx in 0..size {
-        match tx.cmp(&x) {
-            Ordering::Equal => {
-                continue;
-            }
-            Ordering::Less => {
-                if score_left == 0 && tree <= tree_map[tx][y] {
-                    score_left = x.abs_diff(tx);
-                }
-            }
-            Ordering::Greater => {
-                if score_right == 0 && tree <= tree_map[tx][y] {
-                    score_right = x.abs_diff(tx);
-                }
-            }
-        }
-        if score_left > 0 && score_right > 0 {
+
+    for tx in (0..x).rev() {
+        if tree <= tree_map[y][tx] {
+            score_left = x.abs_diff(tx);
             break;
         }
     }
+    if score_left == 0 {
+        score_left = x;
+    }
 
-    // println!("Tree {x} {y} {visible_top:?} {visible_bottom:?} {visible_left:?} {visible_right:?}");
+    for tx in (x + 1)..size {
+        if tree <= tree_map[y][tx] {
+            score_right = x.abs_diff(tx);
+            break;
+        }
+    }
+    if score_right == 0 {
+        score_right = size - x - 1;
+    }
 
-    score_bottom + score_top + score_left + score_right
+    for ty in (0..y).rev() {
+        let ct = tree_map[ty][x];
+        if tree <= tree_map[ty][x] {
+            score_top = y.abs_diff(ty);
+            break;
+        }
+    }
+    if score_top == 0 {
+        score_top = y;
+    }
+
+    for ty in (y + 1)..size {
+        if tree <= tree_map[ty][x] {
+            score_bottom = y.abs_diff(ty);
+            break;
+        }
+    }
+    if score_bottom == 0 {
+        score_bottom = size - y - 1;
+    }
+
+    // println!("Tree {x} {y} T:{score_top:?} B:{score_bottom:?} L:{score_left:?} R:{score_right:?}");
+
+    score_bottom * score_top * score_left * score_right
 }
 
 pub fn get_map(contents: &String) -> Vec<Vec<usize>> {
@@ -139,6 +140,20 @@ pub fn day08_p1(contents: &String) -> usize {
 
 pub fn day08_p2(contents: &String) -> usize {
     let mut result = 0;
+
+    let mut tree_map = get_map(contents);
+
+    let size = tree_map[0].len() as usize;
+
+    for x in 0..size {
+        for y in 0..size {
+            let score = scenic_score(&tree_map, x, y);
+
+            if score > result {
+                result = score;
+            }
+        }
+    }
 
     result
 }
