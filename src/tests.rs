@@ -143,6 +143,16 @@ fn test_day07_p1() {
 }
 
 #[test]
+fn test_day07_p2() {
+    let contents = load(r"..\..\..\..\tests\day07_p1.txt");
+
+    let result = day07_p2(&contents);
+
+    assert_eq!(result, 24933642);
+    // assert_eq!(result, 0);
+}
+
+#[test]
 fn test_day08_p1() {
     let contents = load(r"..\..\..\..\tests\day08_p1.txt");
 

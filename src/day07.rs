@@ -6,9 +6,7 @@ pub struct FsEntry {
     pub path: String,
 }
 
-pub fn day07_p1(contents: &String) -> u32 {
-    let mut result = 0;
-
+fn parse_filesystem(contents: &String) -> Vec<FsEntry> {
     let mut filesystem: Vec<FsEntry> = vec![];
     let mut pwd: Vec<&str> = vec![];
 
@@ -91,9 +89,17 @@ pub fn day07_p1(contents: &String) -> u32 {
         }
     }
 
+    filesystem
+}
+
+pub fn day07_p1(contents: &String) -> u32 {
+    let mut result = 0;
+
+    let filesystem: Vec<FsEntry> = parse_filesystem(contents);
+
     for entry in filesystem.iter() {
         if entry.etype == 'd' && entry.size <= 100_000 {
-            println!("found {entry:?}");
+            // println!("found {entry:?}");
             result += entry.size;
         }
     }
@@ -102,5 +108,23 @@ pub fn day07_p1(contents: &String) -> u32 {
 }
 
 pub fn day07_p2(contents: &String) -> u32 {
-    0
+    let drive_size = 70000000;
+    let needed_space = 30000000;
+
+    let mut filesystem: Vec<FsEntry> = parse_filesystem(contents);
+
+    let root = filesystem
+        .iter()
+        .find(|e| e.name == "/".to_string())
+        .unwrap();
+    // dbg!(root);
+
+    let free_space = drive_size - root.size;
+    let req_space = needed_space - free_space;
+    // dbg!(req_space);
+
+    filesystem.retain(|e| e.etype == 'd' && e.size > req_space);
+    filesystem.sort_by(|a, b| a.size.cmp(&b.size));
+
+    filesystem[0].size
 }
