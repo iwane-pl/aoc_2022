@@ -1,4 +1,4 @@
-use std::{cmp::Ordering, num::ParseIntError, str::FromStr};
+use std::cmp::Ordering;
 
 fn is_visible(tree_map: &Vec<Vec<usize>>, x: usize, y: usize) -> bool {
     // let mut visible = false;
@@ -75,7 +75,6 @@ pub fn scenic_score(tree_map: &Vec<Vec<usize>>, x: usize, y: usize) -> usize {
     }
 
     for ty in (0..y).rev() {
-        let ct = tree_map[ty][x];
         if tree <= tree_map[ty][x] {
             score_top = y.abs_diff(ty);
             break;
@@ -118,7 +117,7 @@ pub fn get_map(contents: &String) -> Vec<Vec<usize>> {
 pub fn day08_p1(contents: &String) -> usize {
     let mut result = 0;
 
-    let mut tree_map = get_map(contents);
+    let tree_map = get_map(contents);
 
     let size = tree_map[0].len() as usize;
     // outside tree count
@@ -141,7 +140,7 @@ pub fn day08_p1(contents: &String) -> usize {
 pub fn day08_p2(contents: &String) -> usize {
     let mut result = 0;
 
-    let mut tree_map = get_map(contents);
+    let tree_map = get_map(contents);
 
     let size = tree_map[0].len() as usize;
 
