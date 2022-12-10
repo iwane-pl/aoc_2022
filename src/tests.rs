@@ -186,3 +186,37 @@ fn test_day08_score_2() {
 
     assert_eq!(result, 8);
 }
+
+#[test]
+fn test_day09_p1() {
+    let contents = load(r"..\..\..\..\tests\day09_p1.txt");
+
+    let result = day09_p1(&contents);
+
+    assert_eq!(result, 13);
+}
+#[test]
+fn test_day09_p2() {
+    let contents = load(r"..\..\..\..\tests\day09_p1.txt");
+
+    let result = day09_p2(&contents);
+
+    assert_eq!(result, 8);
+}
+
+#[test]
+fn test_day10_p1() {
+    let contents = load(r"..\..\..\..\tests\day10_p1.txt");
+
+    let result = day10_p1(&contents);
+
+    assert_eq!(result, 13140);
+}
+#[test]
+fn test_day10_p2() {
+    let contents = load(r"..\..\..\..\tests\day10_p1.txt");
+
+    let result = day10_p2(&contents);
+
+    assert_eq!(result, 8);
+}
