@@ -1,10 +1,21 @@
+use std::collections::HashSet;
+
 pub struct Point {
-    pub x: u32,
-    pub y: u32,
+    pub x: i32,
+    pub y: i32,
+    pub visited: HashSet<(i32, i32)>,
 }
 
 impl Point {
-    pub fn move_by(&mut self, dir: &str, dist: u32) {
+    pub fn new() -> Point {
+        Point {
+            x: 0,
+            y: 0,
+            visited: HashSet::from([(0, 0)]),
+        }
+    }
+
+    pub fn move_by_dir(&mut self, dir: &str, dist: i32) {
         match dir {
             "R" => {
                 self.x += dist;
@@ -19,12 +30,20 @@ impl Point {
                 self.y -= dist;
             }
             _ => {
-                panic!("Invalid character: {dir}");
+                panic!("Invalid direction: {dir}");
             }
         }
+
+        self.visited.insert(self.pos());
     }
 
-    pub fn pos(&self) -> (u32, u32) {
+    pub fn move_by_pos(&mut self, dx: i32, dy: i32) {
+        self.x += dx;
+        self.y += dy;
+        self.visited.insert(self.pos());
+    }
+
+    pub fn pos(&self) -> (i32, i32) {
         (self.x, self.y)
     }
 }
@@ -37,24 +56,40 @@ pub struct Rope {
 impl Rope {
     pub fn new() -> Rope {
         Rope {
-            head: Point { x: 0, y: 0 },
-            tail: Point { x: 0, y: 0 },
+            head: Point::new(),
+            tail: Point::new(),
         }
+    }
+
+    pub fn move_head(&mut self, dir: &str, dist: i32) {
+        for _ in 0..dist {
+            self.head.move_by_dir(dir, 1);
+
+            let dx = self.head.x - self.tail.x;
+            let dy = self.head.y - self.tail.y;
+
+            if dx.abs() >= 2 || dy.abs() >= 2 {
+                self.tail.move_by_pos(dx.signum(), dy.signum());
+            }
+        }
+    }
+
+    pub fn get_tail_visits(&self) -> HashSet<(i32, i32)> {
+        self.tail.visited.clone()
     }
 }
 
 pub fn day09_p1(contents: &String) -> usize {
     let mut result = 0;
 
-    let mut head = Point { x: 0, y: 0 };
-    let mut tail = Point { x: 0, y: 0 };
+    let mut rope = Rope::new();
 
     for line in contents.lines() {
         let cmd = line.split_ascii_whitespace().collect::<Vec<_>>();
-        head.move_by(cmd[0], cmd[1].parse::<u32>().unwrap());
+        rope.move_head(cmd[0], cmd[1].parse::<i32>().unwrap());
     }
 
-    result
+    rope.get_tail_visits().len()
 }
 
 pub fn day09_p2(contents: &String) -> usize {
