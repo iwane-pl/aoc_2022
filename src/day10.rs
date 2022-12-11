@@ -94,6 +94,6 @@ pub fn day10_p1(contents: &String) -> i32 {
     result
 }
 
-pub fn day10_p2(contents: &String) -> usize {
+pub fn day10_p2(_contents: &String) -> usize {
     0
 }

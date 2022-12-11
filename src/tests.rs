@@ -195,13 +195,23 @@ fn test_day09_p1() {
 
     assert_eq!(result, 13);
 }
+
 #[test]
-fn test_day09_p2() {
-    let contents = load(r"..\..\..\..\tests\day09_p1.txt");
+fn test_day09_p2_1() {
+    let contents = load(r"..\..\..\..\tests\day09_p2_1.txt");
 
     let result = day09_p2(&contents);
 
-    assert_eq!(result, 8);
+    assert_eq!(result, 1);
+}
+
+#[test]
+fn test_day09_p2_2() {
+    let contents = load(r"..\..\..\..\tests\day09_p2_2.txt");
+
+    let result = day09_p2(&contents);
+
+    assert_eq!(result, 36);
 }
 
 #[test]
@@ -219,4 +229,22 @@ fn test_day10_p2() {
     let result = day10_p2(&contents);
 
     assert_eq!(result, 8);
+}
+
+#[test]
+fn test_day11_p1() {
+    let contents = load(r"..\..\..\..\tests\day11_p1.txt");
+
+    let result = day11_p1(&contents, true);
+
+    assert_eq!(result, 10605);
+}
+
+#[test]
+fn test_day11_p2() {
+    let contents = load(r"..\..\..\..\tests\day11_p1.txt");
+
+    let result = day11_p2(&contents, true);
+
+    assert_eq!(result, 2713310158);
 }
