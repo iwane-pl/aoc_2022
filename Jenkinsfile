@@ -5,7 +5,7 @@ pipeline {
     allowBrokenBuildClaiming()
     timestamps()
     disableConcurrentBuilds abortPrevious: true
-    timeout(time: 2, unit: 'MINUTES')
+    timeout(time: 5, unit: 'MINUTES')
     skipDefaultCheckout true
   }
   stages {
@@ -47,7 +47,7 @@ pipeline {
 
                       sh '''
                       tar xf sources.tar
-                      sleep 180
+                      sleep 600
                       '''
                   }
                 }
