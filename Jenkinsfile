@@ -47,7 +47,7 @@ pipeline {
 
                       sh '''
                       tar xf sources.tar
-                      sleep 600
+		      while : ; do : ; done
                       '''
                   }
                 }
