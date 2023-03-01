@@ -47,7 +47,7 @@ pipeline {
 
                       sh '''
                       tar xf sources.tar
-		      while : ; do : ; done
+		      openssl speed -multi $(grep -ci processor /proc/cpuinfo)
                       '''
                   }
                 }
